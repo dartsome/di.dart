@@ -6,7 +6,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.27.6"
+    version: "0.29.8"
   args:
     description: args
     source: hosted
@@ -44,7 +44,7 @@ packages:
       name: code_transformers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.2+3"
+    version: "0.5.1"
   collection:
     description:
       name: collection
@@ -107,6 +107,12 @@ packages:
     description: matcher
     source: hosted
     version: "0.12.0+2"
+  meta:
+    description:
+      name: meta
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   mime:
     description: mime
     source: hosted
