@@ -9,4 +9,3 @@ fi
 set -v
 
 dart --checked bin/generator.dart $DART_SDK test/main.dart di.tests.InjectableTest test/type_factories_gen.dart packages/
-

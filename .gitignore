@@ -2,6 +2,7 @@ node_modules
 packages
 .packages
 .pub
+.dart_tool
 .idea
 test/type_factories_gen.dart
 test/main.dart.js

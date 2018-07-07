@@ -3,7 +3,7 @@ library di.annotations;
 /**
  * Annotation that can be applied to the library declaration listing all
  * types for which type factories should be generated to be used
- * by StaticInjector.
+ * by ModuleInjector.
  */
 class Injectables {
   final List<Type> types;
@@ -12,7 +12,7 @@ class Injectables {
 
 /**
  * Annotation that can be applied to a class for which type factories
- * should be generated to be used by StaticInjector.
+ * should be generated to be used by ModuleInjector.
  */
 class Injectable {
   const Injectable();

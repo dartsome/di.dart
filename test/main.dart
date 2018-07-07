@@ -25,7 +25,6 @@ import 'package:di/src/module.dart';
 
 import 'test_annotations.dart';
 // Generated file. Run ../test_tf_gen.sh.
-import 'type_factories_gen.dart' as type_factories_gen;
 import 'main_same_name.dart' as same_name;
 
 import 'dart:mirrors';
@@ -239,14 +238,9 @@ class SameEngine {
 }
 
 
-const String STATIC_NAME = 'Static ModuleInjector';
 const String DYNAMIC_NAME = 'Dynamic ModuleInjector';
 void main() {
   testModule();
-
-  var static_factory = new GeneratedTypeFactories(
-      type_factories_gen.typeFactories, type_factories_gen.parameterKeys);
-  createInjectorSpec(STATIC_NAME, () => new Module.withReflector(static_factory));
 
   Module.classAnnotations = [Injectable, InjectableTest];
   Module.libAnnotations = [Injectables];

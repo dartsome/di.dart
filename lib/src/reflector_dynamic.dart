@@ -23,7 +23,7 @@ class DynamicTypeFactories extends TypeReflector {
    * listed in the `types` field of a `Module.libAnnotations`.
    */
   DynamicTypeFactories() {
-    assert(() {
+    try {
       var typesSymbol = new Symbol('types');
       if (Module.classAnnotations != null) {
         _injectableAnnotations = Module.classAnnotations.toSet().map((Type t) => reflectClass(t));
@@ -41,8 +41,11 @@ class DynamicTypeFactories extends TypeReflector {
           });
         });
       }
-      return true;
-    });
+    } catch (e, s) {
+      print(e.toString());
+      print(s.toString());
+      throw new Exception("DynamicTypeFactories");
+    }
   }
 
   Function factoryFor(Type type) {
@@ -75,22 +78,26 @@ class DynamicTypeFactories extends TypeReflector {
   Function _generateFactory(Type type) {
     ClassMirror classMirror = _reflectClass(type);
 
-    assert(() {
-      // TODO(vicb): Skip the assertion in JS where `ClassMirror.isSubtypeOf()` is not implemented
-      if (!Module.assertAnnotations || 1.0 is int) return true;
-      // Assert than:
-      // - either the class is annotated with a subtype of any `_injectableAnnotations`,
-      // - or the class type is an `_injectableTypes`.
-      var hasClassAnnotation = classMirror.metadata.any((InstanceMirror im) {
-           var cm = im.type;
-           return _injectableAnnotations.any((ClassMirror c) => cm.isSubtypeOf(c));
-         });
-      if (!hasClassAnnotation && !_injectableTypes.contains(type)) {
-        throw "The class '$type' should be annotated with one of "
+    // TODO(vicb): Skip the assertion in JS where `ClassMirror.isSubtypeOf()` is not implemented
+    if (Module.assertAnnotations && !(1.0 is int)) {
+      try {
+        // Assert than:
+        // - either the class is annotated with a subtype of any `_injectableAnnotations`,
+        // - or the class type is an `_injectableTypes`.
+        var hasClassAnnotation = classMirror.metadata.any((InstanceMirror im) {
+          var cm = im.type;
+          return _injectableAnnotations.any((ClassMirror c) => cm.isSubtypeOf(c));
+        });
+        if (!hasClassAnnotation && !_injectableTypes.contains(type)) {
+          throw "The class '$type' should be annotated with one of "
               "'${_injectableAnnotations.map((cm) => cm.reflectedType).join(', ')}'";
+        }
+      } catch (e, s) {
+        print(e.toString());
+        print(s.toString());
+        throw new Exception("_generateFactory");
       }
-      return true;
-    });
+    }
 
     MethodMirror ctor = classMirror.declarations[classMirror.simpleName];
     int length = ctor.parameters.length;
